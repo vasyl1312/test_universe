@@ -20,7 +20,7 @@ export class UsersService {
   }
 
   async register(createUserDto: CreateUserDto) {
-    const { email, password } = createUserDto;
+    const { email, password, deviceToken } = createUserDto;
 
     const existingUser = await this.prisma.user.findUnique({
       where: { email },
@@ -36,6 +36,7 @@ export class UsersService {
       data: {
         email,
         password: hashedPassword,
+        deviceToken,
       },
     });
 
@@ -52,6 +53,7 @@ export class UsersService {
         data: {
           id: user.id,
           email: user.email,
+          deviceToken: user.deviceToken,
         },
       }),
     };
